@@ -42,8 +42,7 @@ func TestSameNumber(t *testing.T) {
 	arr := []int{10, 10}
 	sum := 20
 	i, j, err := TwoSum(arr, sum)
-	assert.Equal(t, -1, i)
-	assert.Equal(t, -1, j)
+	assert.Equal(t, sum, arr[i]+arr[j])
 	assert.NotEqual(t, i, j)
-	assert.NotNil(t, err)
+	assert.Nil(t, err)
 }

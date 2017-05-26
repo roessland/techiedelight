@@ -6,6 +6,10 @@ import (
 	"sort"
 )
 
+// Find two numbers in an array that sum to a specific number and returns their
+// indicies. The indices are always different if the result is valid.
+//
+// nlogn: Sorts array and uses binary search
 func TwoSum(unsorted []int, sum int) (int, int, error) {
 	arr := make([]int, len(unsorted))
 	copy(arr, unsorted)
@@ -19,15 +23,20 @@ func TwoSum(unsorted []int, sum int) (int, int, error) {
 			continue
 		}
 		if arr[i]+arr[j] == sum {
-			return indexOf(unsorted, arr[i]), indexOf(unsorted, arr[j]), nil
+			a := indexOf(unsorted, arr[i], 0)
+			b := indexOf(unsorted, arr[j], 0)
+			if a == b {
+				b = indexOf(unsorted, arr[j], a+1)
+			}
+			return a, b, nil
 		}
 	}
 	return -1, -1, errors.New("no such pair")
 }
 
-func indexOf(arr []int, n int) int {
-	for i, val := range arr {
-		if val == n {
+func indexOf(arr []int, n int, start int) int {
+	for i := start; i < len(arr); i++ {
+		if arr[i] == n {
 			return i
 		}
 	}
